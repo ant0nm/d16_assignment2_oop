@@ -37,21 +37,32 @@ class FieldManager:
             print("Please enter a valid option!")
 
     def add_new_field(self):
-        print("What kind of field is it: corn or wheat?")
+        print("What kind of field is it: corn, wheat, or potato?")
         field_type = input()
+        while not (field_type == "corn" or field_type == "wheat" or field_type == "potato"):
+            print("Please enter a valid field type!")
+            print("What kind of field is it: corn, wheat, or potato?")
+            field_type = input()
 
         print("How large is the field in hectares?")
         field_size = int(input())
 
-        Field.create(field_type, field_size)
+        print("How many cows does it have?")
+        num_cows = int(input())
 
-        print("Added a {} field of {} hectares!".format(field_type, field_size))
+        print("How many chickens does it have?")
+        num_chickens = int(input())
+
+        Field.create(field_type, field_size, num_cows, num_chickens)
+
+        print("Added a {} field of {} hectares with {} cows and {} chickens!".format(field_type, field_size, num_cows, num_chickens))
 
     def harvest_fields(self):
         Field.harvest()
         for field in Field.fields:
             print("Harvesting {} food from {} hectare {} field.".format((field.hectares * field.yield_per_hectare), field.hectares, field.type))
         print(Field.total_food_harvested())
+        print("+5 to each cattle group in each field!")
 
     def farm_status(self):
         Field.get_status()
